@@ -28,10 +28,8 @@ import static gutizia.util.managers.WorldManager.worldManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.logging.Logger;
 
 import static gutizia.util.resources.PropertyUtil.*;
@@ -45,7 +43,8 @@ import static gutizia.util.trackers.TreeTracker.treeTracker;
 @Script.Manifest(
         name="gutFarmer",
         description = "automates the farming process! supports all: trees, fruit trees, herbs, flowers, allotments, hops!",
-        properties="author=Gutizia; topic=1353575; client=4;")
+        properties="category=Farming;threadUrl=https://powbot.org/community/index.php?/topic/190-farming-script/",
+        version = "0.1.0")
 
 public class GutFarmer extends PollingScript<ClientContext> implements PaintListener, ExperienceListener, InventoryListener {
     private final static Logger LOGGER = Logger.getLogger("GutFarmer");

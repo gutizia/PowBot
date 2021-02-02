@@ -3,6 +3,8 @@ package gutizia.util;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import java.util.ArrayList;
+
 public class TileUtil {
 
     public static boolean isInRange(ClientContext ctx, Tile tile, int limit) {
@@ -32,5 +34,17 @@ public class TileUtil {
             }
         }
         return index;
+    }
+
+    public static Tile getClosestTile(ClientContext ctx, ArrayList<Tile> tileList) {
+        double min = Integer.MAX_VALUE;
+        Tile t = Tile.NIL;
+        for (Tile tile : tileList) {
+            if (tile.distanceTo(ctx.players.local()) < min) {
+                min = tile.distanceTo(ctx.players.local());
+                t = tile;
+            }
+        }
+        return t;
     }
 }

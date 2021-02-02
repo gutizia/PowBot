@@ -8,6 +8,10 @@ import java.util.logging.Logger;
 public abstract class Task extends ClientAccessor implements Activatable {
     protected final static Logger LOGGER = Logger.getLogger("Task");
 
+    public Task() {
+        super(org.powerbot.script.ClientContext.ctx());
+    }
+
     public Task(ClientContext ctx) {
         super(ctx);
     }

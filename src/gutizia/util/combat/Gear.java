@@ -11,7 +11,7 @@ import org.powerbot.script.rt4.Item;
  * used to represent an item that is used as equipment with stats
  */
 public class Gear extends CombatStats {
-    private final static PropertyUtil propertyUtil = new PropertyUtil(Script.getStorageLocation().getAbsolutePath() + "\\savedGear");
+    private final static PropertyUtil propertyUtil = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\savedGear");
     private gutizia.util.Item item;
     private Equipment.Slot slot;
     // .bounds(-12,20,-12,20,0,0); if you need bounds, set this
@@ -19,7 +19,7 @@ public class Gear extends CombatStats {
     public Gear(gutizia.util.Item item, Equipment.Slot slot) {
         this.slot = slot;
         this.item = new gutizia.util.Item(item.getSharedId(), item.getSharedName());
-        //setStats();
+        setStats();
     }
 
     public Gear(Item item, Equipment.Slot slot) {
@@ -78,7 +78,6 @@ public class Gear extends CombatStats {
 
     @Override
     public void printStats() {
-        System.out.println("stats for " + item.getName() + ":");
         super.printStats();
     }
 

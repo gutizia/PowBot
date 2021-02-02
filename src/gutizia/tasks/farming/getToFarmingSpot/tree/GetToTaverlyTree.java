@@ -5,6 +5,9 @@ import gutizia.util.skills.farming.PatchAreas;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.resources.Traversing.traversing;
+
+
 public class GetToTaverlyTree extends GetToFarmSpot {
     private final Tile[] pathToPatch = new Tile[] {new Tile(2898, 3544, 0), new Tile(2898, 3534, 0), new Tile(2907, 3523, 0),
             new Tile(2906, 3514, 0), new Tile(2906, 3501, 0), new Tile(2906, 3489, 0), new Tile(2901, 3480 , 0),

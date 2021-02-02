@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 public class Traverse extends SuperTask {
 
-    public Traverse(ClientContext ctx, Activatable activatable, Tile[] path, boolean reverse) {
-        super(ctx);
+    public Traverse(Activatable activatable, Tile[] path, boolean reverse) {
         if (reverse) {
             Tile[] reversePath = new Tile[path.length];
             int j = 0;

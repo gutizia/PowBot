@@ -11,7 +11,9 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.Npc;
 
-import static gutizia.util.trackers.FruitTreeTracker.fruitTreeTracker;
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
 
 public class GetToBrimhaven extends GetToFarmSpot {
     private Tile[] pathToBoat = new Tile[] {new Tile(2763, 3468, 0), new Tile(2768, 3460, 0), new Tile(2774, 3452, 0),

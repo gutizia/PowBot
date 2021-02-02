@@ -8,7 +8,7 @@ import org.powerbot.script.rt4.ClientContext;
 import java.awt.*;
 
 public class TaskOverlay extends ClientAccessor {
-    public static TaskOverlay taskOverlay;
+    public final static TaskOverlay taskOverlay = new TaskOverlay(org.powerbot.script.ClientContext.ctx());
 
     private Rectangle box;
     private Font fontMacroTask;
@@ -18,7 +18,7 @@ public class TaskOverlay extends ClientAccessor {
     private String activeTask = "";
     private long activeTaskStartTime = 0;
 
-    public TaskOverlay(ClientContext ctx) {
+    private TaskOverlay(ClientContext ctx) {
         super(ctx);
         int boxWidth = 160;
         int boxHeight = 60;

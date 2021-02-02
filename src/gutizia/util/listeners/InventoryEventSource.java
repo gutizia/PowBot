@@ -1,6 +1,6 @@
 package gutizia.util.listeners;
 
-import org.powerbot.script.ClientContext;
+import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Item;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class InventoryEventSource implements Runnable {
         this.dispatcher = dispatcher;
         this.ctx = ctx;
         this.inventorySlots = 28;
-        this.inventoryCache = new HashMap<Integer, Item>();
+        this.inventoryCache = new HashMap<>();
 
         for (int i = 0; i < inventorySlots; i++) {
             inventoryCache.put(i, getInventoryItem(i));
@@ -35,7 +35,7 @@ public class InventoryEventSource implements Runnable {
 
                 if (oldItem != null && newItem != null) {
                     if (oldItem.id() != newItem.id()) {
-                        dispatcher.fireEvent(new InventoryEvent(i, oldItem, newItem));
+                        dispatcher.fireEvent(new InventoryEvent(i, oldItem, newItem, i));
                         inventoryCache.put(i, newItem);
                     }
                 }
@@ -49,7 +49,7 @@ public class InventoryEventSource implements Runnable {
     }
 
     private Item getInventoryItem(int inventoryIndex) {
-        return ((org.powerbot.script.rt4.ClientContext) ctx).inventory.itemAt(inventoryIndex);
+        return ctx.inventory.itemAt(inventoryIndex);
     }
 
 }

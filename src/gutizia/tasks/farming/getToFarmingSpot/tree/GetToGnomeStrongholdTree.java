@@ -5,6 +5,8 @@ import gutizia.util.skills.farming.PatchAreas;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.resources.Traversing.traversing;
+
 public class GetToGnomeStrongholdTree extends GetToFarmSpot {
     private final Tile treeTeleportSpot = new Tile(2461, 3444, 0);
     private final Tile[] pathToPatchGate = new Tile[] {new Tile(2456, 3396, 0), new Tile(2449, 3404, 0),

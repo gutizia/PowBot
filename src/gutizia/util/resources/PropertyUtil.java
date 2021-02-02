@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static gutizia.util.trackers.FruitTreeTracker.fruitTreeTracker;
 import static gutizia.util.trackers.HerbRunTracker.herbRunTracker;
@@ -16,19 +18,22 @@ import static gutizia.util.trackers.HopsRunTracker.hopsRunTracker;
 import static gutizia.util.trackers.TreeTracker.treeTracker;
 
 public class PropertyUtil {
-    public final static PropertyUtil herbs = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutHerbs.properties");
-    public final static PropertyUtil flowers = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutFlowers.properties");
-    public final static PropertyUtil allotments = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutAllotments.properties");
-    public final static PropertyUtil hops = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutHops.properties");
-    public final static PropertyUtil fruitTrees = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutFruitTrees.properties");
-    public final static PropertyUtil trees = new PropertyUtil(System.getProperty("java.io.tmpdir") + "gutNormalTrees.properties");
-
     public final static String USE_PREF = "use.preference";
     public final static String LOGIN_DONE = "login.when.done";
     public final static String ACTIVATE = "active";
     public final static String PRIO = "priority";
     public final static String COMPOST = "compost";
     public final static String NEXT_HARVEST = "next.harvest";
+
+    private final static Map<String, String> defSettings = Stream.of(new String[][] {{NEXT_HARVEST, "0"}}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+
+    public final static PropertyUtil herbs = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutHerbs.properties", defSettings);
+    public final static PropertyUtil flowers = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutFlowers.properties", defSettings);
+    public final static PropertyUtil allotments = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutAllotments.properties", defSettings);
+    public final static PropertyUtil hops = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutHops.properties", defSettings);
+    public final static PropertyUtil fruitTrees = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutFruitTrees.properties", defSettings);
+    public final static PropertyUtil trees = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\gutNormalTrees.properties", defSettings);
+
 
     private Map<String, String> defaultProperties;
     private final String absolutePath;

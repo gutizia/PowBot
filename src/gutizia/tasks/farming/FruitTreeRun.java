@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static gutizia.tasks.TaskChanger.taskChanger;
+import static gutizia.util.managers.CameraManager.cameraManager;
 import static gutizia.util.resources.PropertyUtil.NEXT_HARVEST;
 import static gutizia.util.resources.PropertyUtil.fruitTrees;
 import static gutizia.util.trackers.FarmingTracker.farmingTracker;
@@ -72,7 +73,6 @@ public class FruitTreeRun extends Requirements {
         taskChanger.setTasks(getTasks());
         fruitTreeTracker.reset();
 
-        CameraManager cameraManager = new CameraManager(ctx);
         if (!(cameraManager.getZoom() >= CameraManager.Zoom.MID.getRange()[0] &&
                 cameraManager.getZoom() <= CameraManager.Zoom.MID.getRange()[1])) {
             cameraManager.scrollZoom(CameraManager.Zoom.MID);

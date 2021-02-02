@@ -2,16 +2,19 @@ package gutizia.tasks;
 
 import gutizia.util.InteractOptions;
 import gutizia.util.Interactive;
+import org.powerbot.script.Actionable;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
+import org.powerbot.script.rt4.Npc;
 
 import static gutizia.util.combat.PlayerCombat.playerCombat;
 
 public class Interact extends Task {
     private Interactive interactive;
     private Activatable activatable;
+    private Activatable wait;
     private InteractOptions interactOptions;
 
     public Interact(ClientContext ctx, Activatable activatable, Interactive interactive, InteractOptions interactOptions) {
@@ -19,6 +22,12 @@ public class Interact extends Task {
         this.activatable = activatable;
         this.interactive = interactive;
         this.interactOptions = interactOptions;
+        wait = null;
+    }
+
+    public Interact(ClientContext ctx, Activatable activatable, Interactive interactive, InteractOptions interactOptions, Activatable wait) {
+        this(ctx, activatable, interactive, interactOptions);
+        this.wait = wait;
     }
 
     @Override
@@ -53,6 +62,9 @@ public class Interact extends Task {
             Condition.wait(() -> ctx.players.local().interacting().equals(interactive.getInteractive()), 100, 20);
             System.out.println("interacting with object = " +
                     ctx.players.local().interacting().equals(interactive.getInteractive()));
+            if (wait != null) {
+                Condition.wait(() -> wait.activate(), 200, 15);
+            }
         }
     }
 
@@ -65,10 +77,10 @@ public class Interact extends Task {
         }
         if (!interactive.isValid()) {
             System.out.println("querying new interactive object...");
-            interactive.queryInteractive(ctx);
+            interactive.queryInteractive(ctx, interactOptions.isCombatRelated());
         }
 
-        if (!gutizia.util.Interact.actionContains(((GameObject)interactive.getInteractive()).actions(), interactOptions.getAction())) {
+        if (!gutizia.util.Interact.actionContains(((Actionable)interactive.getInteractive()).actions(), interactOptions.getAction())) {
             System.out.println("interactive object did not contain interactOptions's action: '" + interactOptions.getAction() + "'");
             return false;
         }

@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 public class POHManager extends ClientAccessor {
     private final static Logger LOGGER = Logger.getLogger("POHManager");
 
+    public final static POHManager pohManager = new POHManager(org.powerbot.script.ClientContext.ctx());
+
     public enum Jewellery {CASTLE_WARS,FARMING_GUILD,DRAYNOR_VILLAGE,FISHING_GUILD,BURTHORPE,FALADOR_PARK,GRAND_EXCHANGE,CHAMPION_GUILD}
     public enum Portal {
         CAMELOT("camelot"),LUMBRIDGE("lumbridge"),FALADOR("falador"),VARROCK("varrock"),CANIFIS("kharyrll"),
@@ -41,7 +43,7 @@ public class POHManager extends ClientAccessor {
 
     private String lastHost = "";
 
-    public POHManager(ClientContext ctx) {
+    private POHManager(ClientContext ctx) {
         super(ctx);
     }
 

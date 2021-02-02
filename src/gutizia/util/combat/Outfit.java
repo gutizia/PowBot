@@ -10,18 +10,28 @@ import org.powerbot.script.rt4.*;
 import java.util.ArrayList;
 
 public class Outfit extends CombatStats {
-    private static PropertyUtil propertyUtil = new PropertyUtil(Script.getStorageLocation().getAbsolutePath() + "\\outfits.properties");
+    private static PropertyUtil propertyUtil = new PropertyUtil(System.getProperty("java.io.tmpdir") + "PowBot\\outfits.properties");
+
+    private ClientContext ctx = org.powerbot.script.ClientContext.ctx();
 
     private String outfitName;
-    private ArrayList<Gear> gear;
-    private AttackStyle attackStyle;
-    private CombatStyle combatStyle;
+    private ArrayList<Gear> gear = new ArrayList<>();
 
-    public Outfit(CombatStyle combatStyle, AttackStyle attackStyle, ArrayList<Gear> gear) {
-        this.attackStyle = attackStyle;
-        this.combatStyle = combatStyle;
+    public Outfit(ArrayList<Gear> gear) {
         this.gear = gear;
         setStats();
+    }
+
+    public Outfit() {}
+
+    public Outfit getPlayerEquipment() {
+        for (Equipment.Slot slot : Equipment.Slot.values()) {
+            gear.add(new Gear(ctx.equipment.itemAt(slot), slot));
+        }
+
+        Outfit outfit = new Outfit(gear);
+        setStats();
+        return outfit;
     }
 
     private void setStats() {
@@ -71,7 +81,7 @@ public class Outfit extends CombatStats {
             }
             i++;
         }
-        return new Outfit(getCombatStyle(key), getAttackStyle(key), gear);
+        return new Outfit(gear);
     }
 
     /**
@@ -79,10 +89,9 @@ public class Outfit extends CombatStats {
      * format: @param outfitName:ITEM_ID,ITEM_NAME;ITEM_ID,ITEM_NAME;...
      * @param outfitName the name of the outfit, used as key value when saving to outfits.properties
      * @param items the items in the outfit
-     * @param combatStyle the combat style of the outfit
-     * @param attackStyle the attack style of the outfit
+     * @param attackType the attack style of the outfit
      */
-    public static void save(String outfitName, Item[] items, CombatStyle combatStyle, AttackStyle attackStyle) {
+    public static void save(String outfitName, Item[] items, AttackType attackType) {
         StringBuilder sb = new StringBuilder();
         for (Item item : items) {
             sb.append(item.getSharedId());
@@ -92,8 +101,7 @@ public class Outfit extends CombatStats {
         }
         System.out.println("saving " + outfitName + " to " + propertyUtil.getAbsolutePath());
         propertyUtil.updateProperty(outfitName, sb.toString());
-        propertyUtil.updateProperty(outfitName + ".combat.style", getStringCombatStyle(combatStyle));
-        propertyUtil.updateProperty(outfitName + ".attack.style", getStringAttackStyle(attackStyle));
+        propertyUtil.updateProperty(outfitName + ".attack.type", getStringAttackStyle(attackType));
     }
 
     public void saveOutfit() {
@@ -106,12 +114,10 @@ public class Outfit extends CombatStats {
         }
         System.out.println("saving " + outfitName + " to " + propertyUtil.getAbsolutePath());
         propertyUtil.updateProperty(outfitName, sb.toString());
-        propertyUtil.updateProperty(outfitName + ".combat.style", getStringCombatStyle(combatStyle));
-        propertyUtil.updateProperty(outfitName + ".attack.style", getStringAttackStyle(attackStyle));
     }
 
-    private static String getStringCombatStyle(CombatStyle combatStyle) {
-        switch (combatStyle) {
+    private static String getStringCombatStyle(AttackType attackType) {
+        switch (attackType) {
             case MELEE:
                 return "melee";
 
@@ -122,13 +128,13 @@ public class Outfit extends CombatStats {
                 return "range";
 
             default:
-                Script.stopScript("could not get valid combat style for combatStyle value: " + combatStyle);
+                Script.stopScript("could not get valid attack style for attackType value: " + attackType);
                 return null;
         }
     }
 
-    private static String getStringAttackStyle(AttackStyle attackStyle) {
-        switch (attackStyle) {
+    private static String getStringAttackStyle(AttackType attackType) {
+        switch (attackType) {
             case STAB:
                 return "stab";
 
@@ -145,49 +151,7 @@ public class Outfit extends CombatStats {
                 return "slash";
 
             default:
-                Script.stopScript("could not get valid attack style for attackStyle value: " + attackStyle);
-                return null;
-        }
-    }
-
-    private static CombatStyle getCombatStyle(String key) {
-        String s = propertyUtil.getProperty(key + ".combat.style");
-        switch (s) {
-            case "melee":
-                return CombatStyle.MELEE;
-
-            case "range":
-                return CombatStyle.RANGE;
-
-            case "magic":
-                return CombatStyle.MAGIC;
-
-            default:
-                Script.stopScript("could not get valid combat style for key value: " + key + ". value stored at key: \"" + s + "\"");
-                return null;
-        }
-    }
-
-    private static AttackStyle getAttackStyle(String key) {
-        String s = propertyUtil.getProperty(key + ".attack.style");
-        switch (s) {
-            case "crush":
-                return AttackStyle.CRUSH;
-
-            case "stab":
-                return AttackStyle.STAB;
-
-            case "slash":
-                return AttackStyle.SLASH;
-
-            case "range":
-                return AttackStyle.RANGE;
-
-            case "magic":
-                return AttackStyle.MAGIC;
-
-            default:
-                Script.stopScript("could not get valid attack style for key value: " + key + ". value stored at key: \"" + s + "\"");
+                Script.stopScript("could not get valid attack style for attackStyle value: " + attackType);
                 return null;
         }
     }
@@ -233,14 +197,6 @@ public class Outfit extends CombatStats {
         return gear;
     }
 
-    public AttackStyle getAttackStyle() {
-        return attackStyle;
-    }
-
-    public CombatStyle getCombatStyle() {
-        return combatStyle;
-    }
-
     public Items getItems() {
         Items items = new Items();
         for (Gear gear : gear) {
@@ -254,7 +210,7 @@ public class Outfit extends CombatStats {
         Condition.wait(() -> ctx.game.tab().equals(Game.Tab.EQUIPMENT), 50, 10);
         for (Gear gear : getGear()) {
             if (ctx.equipment.itemAt(gear.getSlot()).id() != gear.getId()) {
-                System.out.println("slot " + gear.getSlot() + " did not share id with outfit " + this.getAttackStyle() + " gear " + gear.getName());
+                System.out.println("slot " + gear.getSlot() + " did not share id with outfit " + this.getOutfitName() + " gear " + gear.getName());
                 ctx.game.tab(Game.Tab.INVENTORY);
                 return false;
             }

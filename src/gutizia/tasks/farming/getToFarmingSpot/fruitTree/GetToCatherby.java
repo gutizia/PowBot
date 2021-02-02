@@ -6,7 +6,8 @@ import gutizia.util.skills.farming.PatchAreas;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
-import static gutizia.util.trackers.FruitTreeTracker.fruitTreeTracker;
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
 
 public class GetToCatherby extends GetToFarmSpot {
     private Tile[] pathToPatch = new Tile[] {new Tile(2766,3474,0),new Tile(2779,3473,0),

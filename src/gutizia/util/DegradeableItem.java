@@ -1,7 +1,7 @@
 package gutizia.util;
 
 public class DegradeableItem {
-    private int[] allIds = new int[0];
+    private int[] allIds;
     private String name;
 
     DegradeableItem(int[] allIds, String name) {

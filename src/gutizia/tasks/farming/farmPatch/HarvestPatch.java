@@ -10,6 +10,8 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.GameObject;
+import static gutizia.util.managers.ChatManager.chatManager;
+
 
 
 class HarvestPatch extends FarmPatch {
@@ -25,7 +27,7 @@ class HarvestPatch extends FarmPatch {
         final String action;
 
         if (farming.levelUpChatVisible()) {
-            new ChatManager(ctx).finishDialog();
+            chatManager.finishDialog();
         }
 
         farming.equipMagicSecateurs();

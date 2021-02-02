@@ -75,6 +75,7 @@ public class Drawer {
     }
 
     public static void drawString(Graphics2D g, Point point, String text) {
+        g.setColor(Color.WHITE);
         g.drawString(text, point.x, point.y);
     }
 

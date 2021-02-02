@@ -2,6 +2,7 @@ package gutizia.util;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
+import org.powerbot.script.rt4.Npc;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.GameObject;
@@ -276,7 +277,7 @@ public class Interact {
         }
     }
 
-    public static void use(ClientContext ctx ,Item item) {
+    public static void use(ClientContext ctx , Item item) {
         if (!ctx.game.tab().equals(Game.Tab.INVENTORY)) {
             ctx.game.tab(Game.Tab.INVENTORY, true);
         }
@@ -285,6 +286,44 @@ public class Interact {
 
             item.interact(false,"Use",item.name());
             Condition.sleep(Random.nextInt(340,600));
+        }
+    }
+
+    public void climbLadder(ClientContext ctx, final GameObject ladder, boolean climbUp, int[] bounds) {
+        ladder.bounds(bounds);
+        if (climbUp) {
+            ladder.interact(false,"Climb-up",ladder.name());
+
+        } else {
+            ladder.interact(false,"Climb-down",ladder.name());
+        }
+
+        Condition.wait(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return ctx.players.local().tile().distanceTo(ladder.tile()) > 20;
+            }
+        },600,8);
+    }
+
+    public void climbStairs(ClientContext ctx, GameObject staircase,boolean climbUp, int[] bounds) {
+        staircase.bounds(bounds);
+
+        final int floorLevel = ctx.players.local().tile().floor();
+
+        while (ctx.players.local().tile().floor() == floorLevel) {
+            if (climbUp) {
+                staircase.interact(false,"Climb-up",staircase.name());
+
+            } else {
+                staircase.interact(false,"Climb-down",staircase.name());
+            }
+            Condition.wait(new Callable<Boolean>() {
+                @Override
+                public Boolean call() {
+                    return ctx.players.local().tile().floor() != floorLevel;
+                }
+            },600,8);
         }
     }
 

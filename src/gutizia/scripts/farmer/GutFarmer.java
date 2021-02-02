@@ -41,9 +41,9 @@ import static gutizia.util.trackers.HopsRunTracker.hopsRunTracker;
 import static gutizia.util.trackers.TreeTracker.treeTracker;
 
 @Script.Manifest(
-        name="gutFarmer",
-        description = "automates the farming process! supports all: trees, fruit trees, herbs, flowers, allotments, hops!",
-        properties="category=Farming;threadUrl=https://powbot.org/community/index.php?/topic/190-farming-script/",
+        name = "gutFarmer",
+        description = "supports: trees, fruit trees, herbs, flowers, allotments, hops",
+        properties = "category=Farming;threadUrl=https://powbot.org/community/index.php?/topic/190-farming-script",
         version = "0.1.0")
 
 public class GutFarmer extends PollingScript<ClientContext> implements PaintListener, ExperienceListener, InventoryListener {
@@ -107,12 +107,17 @@ public class GutFarmer extends PollingScript<ClientContext> implements PaintList
         worldManager = new WorldManager(ctx);
         eventDispatcher = new EventDispatcher(ctx);
 
-        ctx.properties.setProperty("login.disable","true");
-        eventDispatcher.addListener(this);
+        if (ctx.properties.containsKey("login.user")) {
+            ctx.properties.setProperty("login.disable","true");
+            eventDispatcher.addListener(this);
+            setStandardTasks();
+            farmingUi.start();
+            ctx.properties.setProperty("login.disable","false");
+        } else {
+            System.out.println("you haven't added an account to account manager");
 
-        setStandardTasks();
-        farmingUi.start();
-        ctx.properties.setProperty("login.disable","false");
+            ctx.controller.stop();
+        }
     }
 
     @Override

@@ -32,8 +32,6 @@ import static gutizia.util.trackers.TreeTracker.treeTracker;
 
 public class GetToFarmSpot extends Task {
     private Logger LOGGER = Logger.getLogger("GetToFarmSpot");
-    protected TeleportManager teleportManager = new TeleportManager(ctx);
-    protected Traversing traversing = new Traversing(ctx);
     protected Interact interact = new Interact();
     protected Farming farming = new Farming(ctx);
 

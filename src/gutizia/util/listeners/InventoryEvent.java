@@ -9,12 +9,14 @@ public class InventoryEvent extends EventObject {
     private final int inventorySlot;
     private final Item oldItem;
     private final Item newItem;
+    private final int invIndex;
 
-    public InventoryEvent(int inventorySlot, Item oldItem, Item newItem) {
+    public InventoryEvent(int inventorySlot, Item oldItem, Item newItem, int invIndex) {
         super(inventorySlot);
         this.inventorySlot = inventorySlot;
         this.oldItem = oldItem;
         this.newItem = newItem;
+        this.invIndex = invIndex;
     }
 
     public int getInventorySlot() {
@@ -29,4 +31,7 @@ public class InventoryEvent extends EventObject {
         return newItem;
     }
 
+    public int getInvIndex() {
+        return invIndex;
+    }
 }

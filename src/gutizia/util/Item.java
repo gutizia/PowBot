@@ -7,6 +7,7 @@ public class Item {
     private DegradeableItem degradeableItem = null;
     private String name;
     private int amount;
+    private int minAmount; // for stackable items. TODO throw error if less than this amount is owned
 
     public Item(int id, String name, int amount) {
         this.id = id;
@@ -86,5 +87,9 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean hasMultipleIds() {
+        return degradeableItem != null;
     }
 }

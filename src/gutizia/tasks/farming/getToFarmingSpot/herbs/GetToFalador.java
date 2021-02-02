@@ -4,6 +4,10 @@ import gutizia.tasks.farming.getToFarmingSpot.GetToFarmSpot;
 import gutizia.util.constants.Paths;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
+
 public class GetToFalador extends GetToFarmSpot {
 
     public GetToFalador(ClientContext ctx) {

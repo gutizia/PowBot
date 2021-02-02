@@ -9,9 +9,10 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.GameObject;
 
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
 public class GetToChampGuild extends GetToFarmSpot {
-    private TeleportManager teleportManager = new TeleportManager(ctx);
-    private Traversing traversing = new Traversing(ctx);
 
     private final Tile[] pathToShortcut = new Tile[] {new Tile(3201,3362,0),new Tile(3212,3359,0),new Tile(3223,3355,0),new Tile(3226,3342,0),
             new Tile(3231,3336,0),new Tile(3240,3337,0)};

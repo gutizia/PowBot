@@ -5,8 +5,6 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
 public class GameObject extends Interactive {
-    private String name;
-    private int[] ids;
     private org.powerbot.script.rt4.GameObject gameObject = ClientContext.ctx().objects.nil();
 
     public GameObject(int interactRange, int[] ids, String name) {
@@ -27,7 +25,7 @@ public class GameObject extends Interactive {
     }
 
     @Override
-    public void queryInteractive(ClientContext ctx) {
+    public void queryInteractive(ClientContext ctx, boolean combatRelated) {
         if (getTile().equals(Tile.NIL)) {
             if (ids.length < 1 && !name.isEmpty()) {
                 gameObject = ctx.objects.select(QUERY_RANGE).nearest().name(name).nearest().poll();

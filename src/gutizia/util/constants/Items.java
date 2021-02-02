@@ -15,9 +15,11 @@ public final class Items {
     public final static int MORT_MYRE_STEM = 2972;
 
     public final static int DRAGON_BONES = 536;
+    public final static int BONES = 526;
     public final static int TELEPORT_TO_HOUSE_TABLET = 8013;
     public final static int TELEPORT_TO_VARROCK_TABLET = 8007;
     public final static int COINS = 995;
+    public final static int WHEAT = 1947;
 
     public final static int PEBBLE = 294;
 
@@ -258,4 +260,11 @@ public final class Items {
     public final static int EMPTY_VIAL = 229;
 
     public final static int MALLIGNUM_ROOT_PLANK = 21036;
+
+    public final static int BUCKET_OF_MILK = 1927;
+    public final static int POT_OF_FLOUR = 1933;
+    public final static int POT = 1931;
+    public final static int EGG = 1944;
+
+    public final static int BOOK_ON_BAXTORIAN = 292;
 }

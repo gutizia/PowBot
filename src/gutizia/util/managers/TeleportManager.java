@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import static gutizia.util.managers.POHManager.pohManager;
+
 public class TeleportManager extends ClientAccessor {
     private final static Logger LOGGER = Logger.getLogger("TeleportManager");
 
-    private POHManager pohManager = new POHManager(ctx);
+    public final static TeleportManager teleportManager = new TeleportManager(org.powerbot.script.ClientContext.ctx());
 
-    public TeleportManager(ClientContext ctx) {
+    private TeleportManager(ClientContext ctx) {
         super(ctx);
     }
 

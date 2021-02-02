@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 abstract public class AbstractUI extends ClientAccessor {
     protected JFrame frame;
     protected Dialog dialog = null;
+    protected Dialog integerInputDialog = null;
 
     private JComboBox<String>[] jComboBoxes;
     private JList<String> list;
@@ -51,7 +52,6 @@ abstract public class AbstractUI extends ClientAccessor {
         frame.setSize(650, 450);
 
         initStartButton();
-
     }
 
     private void initStartButton() {
@@ -283,6 +283,32 @@ abstract public class AbstractUI extends ClientAccessor {
 
         dialogError.setVisible(true);
     }
+
+    public void makeIntegerInputDialog(JTextField tField) {
+        integerInputDialog = new Dialog(frame ,"enter a number");
+        integerInputDialog.setLayout(null);
+        integerInputDialog.setSize(200, 120);
+
+        JTextField textField = new JTextField();
+        textField.setBounds(20, 40, 160, 20);
+        integerInputDialog.add(textField);
+
+        JButton okButton = new JButton("Ok");
+        okButton.setBounds(15, 75, 75, 30);
+        okButton.addActionListener((ActionEvent e) -> {
+            tField.setText(textField.getText());
+            integerInputDialog.dispose();
+        });
+        integerInputDialog.add(okButton);
+
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setBounds(110, 75, 75, 30);
+        cancelButton.addActionListener((ActionEvent e) -> integerInputDialog.dispose());
+        integerInputDialog.add(cancelButton);
+
+        integerInputDialog.setVisible(true);
+    }
+
 
     public JComboBox[] getJComboBoxes() {
         return jComboBoxes;

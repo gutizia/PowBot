@@ -9,6 +9,9 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
 public class GetToHosidius extends GetToFarmSpot {
     private final Tile doorTile = new Tile(1249, 3723, 0);
     private final int[] bounds = {-68, 104, -332, -36, 16, 40};
@@ -21,7 +24,6 @@ public class GetToHosidius extends GetToFarmSpot {
     public void execute() {
         if (teleportManager.isInFarmingTeleportAreaInside()) {
             GameObject door = ctx.objects.select(doorTile, 3).at(doorTile).name("Door").poll();
-            new CameraManager(ctx).turnCamera(CameraManager.Direction.SOUTH);
             if (Interact.interact(ctx, door, false,"Open", false)) {
                 Condition.wait(() -> ctx.players.local().tile().y() <= 3722, 600, 4);
             }

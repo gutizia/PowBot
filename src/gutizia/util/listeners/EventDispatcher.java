@@ -22,6 +22,7 @@ public class EventDispatcher {
         new Thread(new InventoryEventSource(this, ctx)).start();
         new Thread(new ExperienceEventSource(this, ctx)).start();
         new Thread(new LevelEventSource(this, ctx)).start();
+        new Thread(new GroundItemEventSource(this, ctx)).start();
     }
 
     public void addListener(EventListener listener) {
@@ -47,8 +48,15 @@ public class EventDispatcher {
             for (EventListener listener : listeners) {
                 if (listener instanceof ExperienceListener && event instanceof ExperienceEvent) {
                     ((ExperienceListener) listener).onExperienceChanged((ExperienceEvent) event);
+
                 } else if (listener instanceof InventoryListener && event instanceof InventoryEvent) {
                     ((InventoryListener) listener).onInventoryChange((InventoryEvent) event);
+
+                } else if (listener instanceof GroundItemListener && event instanceof GroundItemEvent) {
+                    ((GroundItemListener) listener).onGroundItemChange((GroundItemEvent) event);
+
+                } else if (listener instanceof  LevelListener && event instanceof LevelEvent) {
+                    ((LevelListener) listener).onLevelChanged((LevelEvent) event);
                 }
             }
         }

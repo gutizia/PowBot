@@ -3,6 +3,10 @@ package gutizia.tasks.farming.getToFarmingSpot;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
+
 class WalkToGnomeStrongholdGate extends GetToFarmSpot {
     private final Tile[] pathToGate = new Tile[] {new Tile(2601,3388,0), new Tile(2589,3387,0), new Tile(2576,3387,0), new Tile(2565,3391,0),
             new Tile(2554,3393,0), new Tile(2542,3398,0), new Tile(2529,3399,0), new Tile(2518,3393,0), new Tile(2506,3388,0),

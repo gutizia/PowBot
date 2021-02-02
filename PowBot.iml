@@ -14,7 +14,9 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="jar://$USER_HOME$/.powbot/client/PowBot.jar!/" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="PowBot" level="project" />
   </component>
 </module>

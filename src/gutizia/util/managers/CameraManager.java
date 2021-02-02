@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 public class CameraManager extends ClientAccessor {
     private final static Logger LOGGER = Logger.getLogger("CameraManager");
 
+    public final static CameraManager cameraManager = new CameraManager(org.powerbot.script.ClientContext.ctx());
+
     public enum Zoom {
         //max X = 697
         //min X = 601
@@ -66,7 +68,7 @@ public class CameraManager extends ClientAccessor {
 
     public enum Direction {NORTH,EAST,SOUTH,WEST}
 
-    public CameraManager(ClientContext ctx) {
+    private CameraManager(ClientContext ctx) {
         super(ctx);
     }
 

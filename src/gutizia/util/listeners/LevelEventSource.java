@@ -32,7 +32,7 @@ public class LevelEventSource implements Runnable {
 
                 if (oldLevel != newLevel) {
                     if (!dispatcher.isPaused()) {
-                        dispatcher.fireEvent(new LevelEvent(i, oldLevel, newLevel)); // ignores updating levels if paused
+                        dispatcher.fireEvent(new LevelEvent(i, oldLevel, newLevel));
                     }
                     levelCache.put(i, newLevel);
                 }

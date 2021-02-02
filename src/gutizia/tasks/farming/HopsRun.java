@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static gutizia.tasks.TaskChanger.taskChanger;
+import static gutizia.util.managers.CameraManager.cameraManager;
 import static gutizia.util.resources.PropertyUtil.NEXT_HARVEST;
 import static gutizia.util.resources.PropertyUtil.hops;
 import static gutizia.util.trackers.FarmingTracker.farmingTracker;
@@ -69,7 +70,6 @@ public class HopsRun extends Requirements {
         taskChanger.setTasks(getTasks());
         hopsRunTracker.reset();
 
-        CameraManager cameraManager = new CameraManager(ctx);
         if (!(cameraManager.getZoom() >= CameraManager.Zoom.MID.getRange()[0] &&
                 cameraManager.getZoom() <= CameraManager.Zoom.MID.getRange()[1])) {
             cameraManager.scrollZoom(CameraManager.Zoom.MID);

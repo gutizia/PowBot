@@ -13,12 +13,12 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.Npc;
 
+import static gutizia.util.managers.POHManager.pohManager;
 import static gutizia.util.managers.WorldManager.worldManager;
+import static gutizia.util.resources.Traversing.traversing;
 import static gutizia.util.trackers.HopsRunTracker.hopsRunTracker;
 
 public class GetToEntrana extends GetToFarmSpot {
-    private POHManager pohManager = new POHManager(ctx);
-    private Traversing traversing = new Traversing(ctx);
     private Farming farming = new Farming(ctx);
 
     private final Area entranaBoatArea = new Area(new Tile(2823,3328,1),new Tile(2835,3332,1));

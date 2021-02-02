@@ -23,8 +23,11 @@ public abstract class CombatStats {
     private int attackRange = 0;
     private int aggroRange = 0;
 
-    int getOffBonus(AttackStyle attackStyle) {
-        switch (attackStyle) {
+    protected int accuracy;
+    protected int maxHit;
+
+    int getOffBonus(AttackType attackType) {
+        switch (attackType) {
             case STAB:
                 return stats[OFF_STAB];
 
@@ -41,12 +44,12 @@ public abstract class CombatStats {
                 return stats[OFF_MAGIC];
 
             default:
-                throw new IllegalArgumentException("getOffBonus requires a valid attackStyle value, you sent: " + attackStyle);
+                throw new IllegalArgumentException("getOffBonus requires a valid attackStyle value, you sent: " + attackType);
         }
     }
 
-    public int getDefBonus(AttackStyle attackStyle) {
-        switch (attackStyle) {
+    public int getDefBonus(AttackType attackType) {
+        switch (attackType) {
             case STAB:
                 return stats[DEF_STAB];
 
@@ -63,12 +66,12 @@ public abstract class CombatStats {
                 return stats[DEF_MAGIC];
 
             default:
-                throw new IllegalArgumentException("getDefBonus requires a valid attackStyle value, you sent: " + attackStyle);
+                throw new IllegalArgumentException("getDefBonus requires a valid attackStyle value, you sent: " + attackType);
         }
     }
 
-    public int getStrBonus(CombatStyle combatStyle) {
-        switch (combatStyle) {
+    public int getStrBonus(AttackType attackType) {
+        switch (attackType) {
             case MELEE:
                 return stats[STR_MELEE];
 
@@ -79,7 +82,7 @@ public abstract class CombatStats {
                 return stats[STR_MAGIC];
 
             default:
-                throw new IllegalArgumentException("getStrBonus requires a valid CombatStyle value, you sent: " + combatStyle);
+                throw new IllegalArgumentException("getStrBonus requires a valid CombatStyle value, you sent: " + attackType);
         }
     }
 
@@ -130,5 +133,13 @@ public abstract class CombatStats {
 
     public int[] getStats() {
         return stats;
+    }
+
+    public int getMaxHit() {
+        return maxHit;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
     }
 }

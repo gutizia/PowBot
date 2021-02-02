@@ -7,19 +7,20 @@ import org.powerbot.script.rt4.Prayer;
 
 public class CombatCalculations {
 
-    public static int calculateMaxHit(ClientContext ctx, CombatStyle combatStyle, int strBonus, boolean usingVoid) {
-        int effectiveLevel = calculateEffectiveLevelMaxHit(ctx, combatStyle, usingVoid);
+    public static int calculateMaxHit(ClientContext ctx, AttackType attackType, int strBonus, boolean usingVoid) {
+        int effectiveLevel = calculateEffectiveLevelMaxHit(ctx, attackType, usingVoid);
+        System.out.println("effective level = " + effectiveLevel);
         return (int) Math.floor(0.5 + (float)effectiveLevel * (strBonus + 64) / 640);
     }
 
-    public static int calculateAccuracy(ClientContext ctx, CombatStyle combatStyle, int attBonus, boolean usingVoid) {
-        int effectiveLevel = calculateEffectiveLevelAccuracy(ctx, combatStyle, false, usingVoid);
+    public static int calculateAccuracy(ClientContext ctx, AttackType attackType, int attBonus, boolean usingVoid) {
+        int effectiveLevel = calculateEffectiveLevelAccuracy(ctx, attackType, false, usingVoid);
         return effectiveLevel * (attBonus + 64);
     }
 
     public static int[] calculateDefence(ClientContext ctx, int[] defBonuses) {
         int[] defence = new int[defBonuses.length];
-        int effectiveLevel = calculateEffectiveLevelAccuracy(ctx, CombatStyle.MELEE, true, false);
+        int effectiveLevel = calculateEffectiveLevelAccuracy(ctx, AttackType.MELEE, true, false);
         for (int i = 0; i < defBonuses.length; i++) {
             defence[i] = effectiveLevel * (defBonuses[i] + 64);
         }
@@ -37,25 +38,30 @@ public class CombatCalculations {
         return hitChance;
     }
 
-    private static int calculateEffectiveLevelMaxHit(ClientContext ctx, CombatStyle combatStyle, boolean usingVoid) {
+    private static int calculateEffectiveLevelMaxHit(ClientContext ctx, AttackType attackType, boolean usingVoid) {
         int level = 1, effectiveLevel;
-
-        switch (combatStyle) {
-            case MELEE:
-                level = ctx.skills.level(Constants.SKILLS_STRENGTH);
-                break;
-
+        boolean isMelee = false;
+        switch (attackType) {
             case RANGE:
                 level = ctx.skills.level(Constants.SKILLS_RANGE);
                 break;
 
             case MAGIC:
                 throw new IllegalArgumentException("magic can't be calculated with this method, please use it's own dedicated method");
+
+            case MELEE: case CRUSH: case SLASH: case STAB:
+                level = ctx.skills.level(Constants.SKILLS_STRENGTH);
+                isMelee = true;
+                break;
+
+            default:
+                break;
         }
 
         effectiveLevel = (int) Math.floor((double) level * getMaxHitPrayerBonus(ctx));
 
-        effectiveLevel += 8 + (combatStyle.equals(CombatStyle.MELEE) ? getStrengthStanceBonus(ctx) : getRangeStanceBonus(ctx));
+
+        effectiveLevel += 8 + (isMelee ? getStrengthStanceBonus(ctx) : getRangeStanceBonus(ctx));
 
         if (usingVoid) {
             effectiveLevel *= 1.10;
@@ -109,25 +115,26 @@ public class CombatCalculations {
         return 0;
     }
 
-    private static int calculateEffectiveLevelAccuracy(ClientContext ctx, CombatStyle combatStyle, boolean defence, boolean usingVoid) {
+    private static int calculateEffectiveLevelAccuracy(ClientContext ctx, AttackType attackType, boolean defence, boolean usingVoid) {
         int level = 1, effectiveLevel;
-
+        boolean isMagic = false;
         if (defence) {
             level = ctx.skills.level(Constants.SKILLS_DEFENSE);
             effectiveLevel = (int) Math.floor((double) level * getDefencePrayerBonus(ctx));
             effectiveLevel += getDefenceStanceBonus(ctx) + 8;
         } else {
-            switch (combatStyle) {
-                case MELEE:
-                    level = ctx.skills.level(Constants.SKILLS_ATTACK);
-                    break;
-
+            switch (attackType) {
                 case RANGE:
                     level = ctx.skills.level(Constants.SKILLS_RANGE);
                     break;
 
                 case MAGIC:
                     level = ctx.skills.level(Constants.SKILLS_MAGIC);
+                    isMagic = true;
+                    break;
+
+                case MELEE: case CRUSH: case SLASH: case STAB:
+                    level = ctx.skills.level(Constants.SKILLS_ATTACK);
                     break;
             }
             effectiveLevel = (int) Math.floor((double) level * getAttackPrayerBonus(ctx));
@@ -135,7 +142,7 @@ public class CombatCalculations {
         }
 
         if (usingVoid) {
-            effectiveLevel *= (combatStyle.equals(CombatStyle.MAGIC) ? 1.45 : 1.10);
+            effectiveLevel *= (isMagic ? 1.45 : 1.10);
         }
         return effectiveLevel;
     }

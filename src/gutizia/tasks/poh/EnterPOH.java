@@ -6,8 +6,9 @@ import gutizia.util.managers.WorldManager;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Widget;
 
+import static gutizia.util.managers.POHManager.pohManager;
+
 public class EnterPOH extends Task {
-    private POHManager pohManager = new POHManager(ctx);
 
     private final Widget HOUSE_ADVERTISEMENT = ctx.widgets.widget(52);
 

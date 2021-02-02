@@ -5,6 +5,9 @@ import gutizia.util.skills.farming.PatchAreas;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.managers.TeleportManager.teleportManager;
+
+
 public class GetToFaladorTree extends GetToFarmSpot {
 
     public GetToFaladorTree(ClientContext ctx) {

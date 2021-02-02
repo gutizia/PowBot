@@ -27,4 +27,26 @@ public class Areas {
             new Tile(3207, 3215, 2),
             new Tile(3211, 3222, 2)
     );
+
+    public final static Area GOBLIN = new Area(
+            new Tile(3240, 3227, 0),
+            new Tile(3264, 3254, 0)
+    );
+
+    public final static Area GOBLIN_HOUSE = new Area(
+            new Tile(3243, 3244, 0),
+            new Tile(3249, 3249, 0)
+    );
+
+    public final static Area LUMBRIDGE_COW_PEN = new Area(
+            new Tile(3253, 3255, 0),
+            new Tile(3253, 3272, 0),
+            new Tile(3251, 3275, 0),
+            new Tile(3248, 3280, 0),
+            new Tile(3243, 3284, 0),
+            new Tile(3242, 3296, 0),
+            new Tile(3266, 3297, 0),
+            new Tile(3265, 3256, 0)
+    );
+
 }

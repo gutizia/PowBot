@@ -13,11 +13,16 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static gutizia.util.managers.CameraManager.cameraManager;
+import static gutizia.util.managers.TeleportManager.teleportManager;
+
+
 public class Traversing extends ClientAccessor {
     private final static Logger LOGGER = Logger.getLogger(Traversing.class.getName());
-    private CameraManager cameraManager = new CameraManager(ctx);
 
-    public Traversing(ClientContext ctx) {
+    public final static Traversing traversing = new Traversing(org.powerbot.script.ClientContext.ctx());
+
+    private Traversing(ClientContext ctx) {
         super(ctx);
     }
 
@@ -291,8 +296,6 @@ public class Traversing extends ClientAccessor {
     }
 
     public void getToZanaris() {
-        TeleportManager teleportManager = new TeleportManager(ctx);
-
         final int[] doorBounds = new int[] {4, 16, -208, -16, 8, 112};
         teleportManager.teleportToLumbridge(false);
 

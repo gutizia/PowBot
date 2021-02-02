@@ -30,6 +30,9 @@ public abstract class SuperTask extends Task implements MacroTask {
         super(ctx);
     }
 
+    public SuperTask() {
+    }
+
     @Override
     public void execute() {
         taskInfo.start();

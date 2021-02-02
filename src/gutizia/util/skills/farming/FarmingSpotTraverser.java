@@ -13,6 +13,11 @@ import org.powerbot.script.rt4.*;
 
 import java.util.logging.Logger;
 
+import static gutizia.util.managers.CameraManager.cameraManager;
+import static gutizia.util.managers.POHManager.pohManager;
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
 public class FarmingSpotTraverser extends ClientAccessor {
     private final static Logger LOGGER = Logger.getLogger("FarmingSpotTraverser");
     private Interact interact = new Interact();
@@ -21,10 +26,6 @@ public class FarmingSpotTraverser extends ClientAccessor {
     public FarmingSpotTraverser(ClientContext ctx) {
         super(ctx);
     }
-
-    private TeleportManager teleportManager = new TeleportManager(ctx);
-    private Traversing traversing = new Traversing(ctx);
-    private POHManager pohManager = new POHManager(ctx);
 
     public void getToFarmingSpot(Farming.FarmingSpot farmingSpot) {
         Tile[] pathToPatch;
@@ -190,7 +191,7 @@ public class FarmingSpotTraverser extends ClientAccessor {
     }
 
     private void openGnomeStrongholdGate() {
-        new CameraManager(ctx).turnCamera(CameraManager.Direction.NORTH);
+        cameraManager.turnCamera(CameraManager.Direction.NORTH);
         GameObject gate = ctx.objects.select(15).name("Gate").nearest().poll();
         Interact.interact(ctx, gate,true,"Open", false);
 

@@ -1,5 +1,8 @@
 package gutizia.util.managers;
 
+import gutizia.tasks.Interact;
+import gutizia.tasks.Task;
+import gutizia.util.InteractOptions;
 import gutizia.util.constants.Components;
 import gutizia.util.constants.Widgets;
 import org.powerbot.script.Condition;
@@ -7,16 +10,15 @@ import org.powerbot.script.Random;
 import org.powerbot.script.rt4.ClientAccessor;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Component;
-import org.powerbot.script.rt4.Npc;
 
 import java.util.concurrent.Callable;
 
 public class ChatManager extends ClientAccessor {
 
-    private final Component gameMessages = ctx.widgets.component(Widgets.CHAT_BOX,Components.FOLDER_CHAT_BOX_GAME_MESSAGES);
+    public final static Component GAME_MESSAGES = ClientContext.ctx().widgets.component(Widgets.CHAT_BOX,Components.FOLDER_CHAT_BOX_GAME_MESSAGES);
+    public final static ChatManager chatManager = new ChatManager(ClientContext.ctx());
 
-
-    public ChatManager(ClientContext ctx) {
+    private ChatManager(ClientContext ctx) {
         super(ctx);
     }
 
@@ -29,26 +31,17 @@ public class ChatManager extends ClientAccessor {
     }
 
     public void startConversation(String name) {
-        while (!chatActive()){
+        Task task =  new Interact(ctx, () -> true, new gutizia.util.Npc(8, new int[] {}, name),
+                new InteractOptions("Talk-to", false, false, false, false, false),
+                this::chatActive);
 
-            Npc npc = ctx.npcs.select().name(name).nearest().poll();
-
-            if (!npc.inViewport()) {
-                ctx.camera.turnTo(npc);
-            }
-
-            npc.interact(false,"Talk-to");
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() {
-                    return ctx.widgets.component(Widgets.CHAT_BOX_CONVERSATION_NPC, Components.CHAT_BOX_CONVERSATION_CLICK_TO_CONTINUE).visible();
-                }
-            },600,5);
+        if (task.activate()) {
+            task.execute();
         }
     }
 
     public String getLastGameMessage() {
-        return gameMessages.component(0).text();
+        return GAME_MESSAGES.component(0).text();
     }
 
     public void chooseChatOption(int option) {

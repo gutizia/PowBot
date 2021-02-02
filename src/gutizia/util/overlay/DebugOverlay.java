@@ -1,18 +1,23 @@
 package gutizia.util.overlay;
 
 import gutizia.util.constants.Widgets;
+import gutizia.util.settings.CombatSettings;
+import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientAccessor;
 import org.powerbot.script.rt4.ClientContext;
+import org.powerbot.script.rt4.GroundItem;
 
 import java.awt.*;
 
+import static gutizia.util.managers.LootManager.lootManager;
+
 public class DebugOverlay extends ClientAccessor {
-    public static DebugOverlay debugOverlay;
+    public final static DebugOverlay debugOverlay = new DebugOverlay(org.powerbot.script.ClientContext.ctx());
 
     private Rectangle box;
     private int x;
 
-    public DebugOverlay(ClientContext ctx) {
+    private DebugOverlay(ClientContext ctx) {
         super(ctx);
         int boxWidth = 160;
         int boxHeight = 120;
@@ -37,7 +42,15 @@ public class DebugOverlay extends ClientAccessor {
         g.drawString("health %: " + ctx.combat.healthPercent(), x, box.y + 48);
         g.drawString("orientation: " + ctx.players.local().orientation(), x, box.y + 64);
         g.drawString("interacting with: " + ctx.players.local().interacting().name(), x, box.y + 80);
-        g.drawString("", x, box.y + 96);
+        g.drawString("included area size: " + CombatSettings.getIncludedAreas().tiles().length, x, box.y + 96);
         g.drawString("", x, box.y + 112);
+        for (Tile t : lootManager.getLootTiles()) {
+            Drawer.drawTile(g, t.matrix(ctx), Drawer.TileColor.YELLOW);
+        }
+        int i = 0;
+        for (GroundItem groundItem : lootManager.getLootList()) {
+            Drawer.drawString(g, new Point(20, 90 + (i++ * 18)),"id:" + groundItem.id() + " tile: " + groundItem.tile() +
+                    " valid: " + groundItem.valid() + " name: " + groundItem.name() + " stacksize: " + groundItem.stackSize());
+        }
     }
 }

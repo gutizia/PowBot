@@ -4,6 +4,9 @@ import gutizia.tasks.farming.getToFarmingSpot.GetToFarmSpot;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.resources.Traversing.traversing;
+
+
 public class GetToGnomeStronghold extends GetToFarmSpot {
     private final Tile[] pathToPatch = new Tile[] {new Tile(2461,3395,0),new Tile(2461,3408,0),new Tile(2461,3420,0),new Tile(2462,3432,0),
             new Tile(2466,3441,0),new Tile(2474,3447,0)};

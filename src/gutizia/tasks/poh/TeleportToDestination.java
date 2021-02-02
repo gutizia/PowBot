@@ -4,8 +4,9 @@ import gutizia.tasks.Task;
 import gutizia.util.managers.POHManager;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.managers.POHManager.pohManager;
+
 public class TeleportToDestination extends Task {
-    private POHManager pohManager = new POHManager(ctx);
 
     private POHManager.Jewellery jewellery = null;
     private POHManager.Portal portal = null;

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerEquipment extends ClientAccessor {
-    public static PlayerEquipment playerEquipment;
+    public final static PlayerEquipment playerEquipment = new PlayerEquipment(org.powerbot.script.ClientContext.ctx());
 
     private static Map<Integer, Integer> foodHealingMap;
     private static Map<Integer, Integer> prayerRestoreMap;
@@ -23,7 +23,7 @@ public class PlayerEquipment extends ClientAccessor {
     private int runEnergyInInventory;
     private int poisonResistInInventory;
 
-    public PlayerEquipment(ClientContext ctx) {
+    private PlayerEquipment(ClientContext ctx) {
         super(ctx);
         initFoodHealingMap();
         initPrayerRestoreMap();

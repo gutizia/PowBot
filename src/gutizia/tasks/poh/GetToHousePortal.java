@@ -10,9 +10,10 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.Game;
 
+import static gutizia.util.managers.POHManager.pohManager;
+
 
 public class GetToHousePortal extends Task {
-    private POHManager pohManager = new POHManager(ctx);
     private Activatable activatable = null;
 
     public GetToHousePortal(ClientContext ctx) {

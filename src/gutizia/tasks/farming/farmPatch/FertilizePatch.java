@@ -15,6 +15,8 @@ import org.powerbot.script.rt4.Item;
 import static gutizia.util.trackers.CompostTracker.compostTracker;
 import static gutizia.util.trackers.FruitTreeTracker.fruitTreeTracker;
 import static gutizia.util.trackers.TreeTracker.treeTracker;
+import static gutizia.util.managers.ChatManager.chatManager;
+
 
 class FertilizePatch extends PlantPatch {
 
@@ -110,7 +112,6 @@ class FertilizePatch extends PlantPatch {
 
         final int initialExp = ctx.skills.experience(Constants.SKILLS_FARMING);
         Interact.use(ctx, compost);
-        ChatManager chatManager = new ChatManager(ctx);
 
         if (patchObject.interact(false,"Use",patchObject.name())) {
             Condition.wait(() -> initialExp < ctx.skills.experience(Constants.SKILLS_FARMING) || chatManager.getLastGameMessage().contains("already been treated"),600,5);

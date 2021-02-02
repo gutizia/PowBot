@@ -5,6 +5,9 @@ import gutizia.util.skills.farming.PatchAreas;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import static gutizia.util.resources.Traversing.traversing;
+
+
 public class GetToFarmingGuildTree extends GetToFarmSpot {
     private final Tile[] pathToPatch = new Tile[] {new Tile(1245, 3730, 0), new Tile(1236, 3733, 0)};
 

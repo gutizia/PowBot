@@ -13,8 +13,9 @@ import org.powerbot.script.rt4.GameObject;
 
 import java.util.logging.Logger;
 
-import static gutizia.util.managers.WorldManager.worldManager;
-import static gutizia.util.trackers.HopsRunTracker.hopsRunTracker;
+import static gutizia.util.managers.TeleportManager.teleportManager;
+import static gutizia.util.resources.Traversing.traversing;
+
 
 public class GetToYanille extends GetToFarmSpot {
     private Logger LOGGER = Logger.getLogger("GetToYanille");

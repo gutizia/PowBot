@@ -16,6 +16,7 @@ import org.powerbot.script.rt4.ClientContext;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import static gutizia.util.managers.CameraManager.cameraManager;
 import static gutizia.util.resources.PropertyUtil.*;
 import static gutizia.util.trackers.FarmingTracker.farmingTracker;
 import static gutizia.util.trackers.HerbRunTracker.herbRunTracker;
@@ -77,7 +78,6 @@ public class HerbRun extends Requirements {
         taskChanger.setTasks(getTasks());
         herbRunTracker.reset();
 
-        CameraManager cameraManager = new CameraManager(ctx);
         if (!(cameraManager.getZoom() >= CameraManager.Zoom.MID.getRange()[0] &&
                 cameraManager.getZoom() <= CameraManager.Zoom.MID.getRange()[1])) {
             cameraManager.scrollZoom(CameraManager.Zoom.MID);
